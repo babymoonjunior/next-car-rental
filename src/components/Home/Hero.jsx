@@ -22,12 +22,15 @@ export default function Hero() {
           Explore Cars
         </button>
       </div>
-      <div><Image src='/hero.png'
-            alt='hero'
-            width={400}
-            height={500}
-            className='w-full object-cover align-middle'
-            /></div>
+      <div>
+        <Image
+          src="/hero.png"
+          alt="hero"
+          width={400}
+          height={500}
+          className="w-full object-cover align-middle"
+        />
+      </div>
     </div>
   );
 }

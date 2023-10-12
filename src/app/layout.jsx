@@ -1,9 +1,9 @@
 import { ClerkProvider, SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google"; //change font to Outfit
 import NavBar from "@/components/NavBar";
 
-const inter = Inter({ subsets: ["latin"] });
+const outfit = Outfit({ subsets: ["latin"] }); //change font to Outfit
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className={outfit.className}>
           <SignedIn>
             <NavBar />
             {children}
