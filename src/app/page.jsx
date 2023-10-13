@@ -3,9 +3,9 @@
 import CarsFilterOption from "@/components/Home/CarsFilterOption";
 import Hero from "@/components/Home/Hero";
 import SearchInput from "@/components/Home/SearchInput";
-import getCarsList from "../../services";
 import { useEffect, useState } from "react";
 import CarLists from "@/components/Home/CarsList";
+import { getCarsList } from "../../services";
 
 export default function Home() {
   const [carLists, setCarLists] = useState([]);
