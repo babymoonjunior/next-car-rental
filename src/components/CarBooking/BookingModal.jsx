@@ -14,12 +14,9 @@ export default function BookingModal({ car }) {
           <div>
             <CarCard car={car} />
           </div>
-          <div><Form /></div>
+          <div><Form car={car} /></div>
         </div>
-        <div className="modal-action">
-          <button className="btn">Close</button>
-          <button className="btn bg-blue-500 text-white hover:bg-blue-900">Save</button>
-        </div>
+        
       </form>
     </>
   );

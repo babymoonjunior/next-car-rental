@@ -1,27 +1,58 @@
 import { useEffect, useState } from "react";
-import { getStoreLocations } from "../../../services";
+import { createBooking, getStoreLocations } from "../../../services";
 
-export default function Form() {
-    const [storeLocation, setStoreLocation] = useState([]);
+export default function Form({ car }) {
+  const [storeLocation, setStoreLocation] = useState([]);
+  const [formValue, setFormValue] = useState({
+    location: "",
+    pickUpDate: "",
+    dropOffDate: "",
+    pickUpTime: "",
+    dropOffTime: "",
+    contactNumber: "",
+    userName: "wennie Dev",
+    carId: { connect: { id: "" } },
+  });
 
-    useEffect(()=>{
-        getStoreLocations_();
-    },[])
+  const today = new Date();
 
-    const getStoreLocations_ = async () => {
-        const res =await getStoreLocations();
-        console.log(res);
-        setStoreLocation(res.storesLocations);
+  useEffect(() => {
+    getStoreLocations_();
+  }, []);
+
+
+  useEffect(() => {
+    if(car){
+        setFormValue({ ...formValue, carId: { connect: { id: car.id } } });
     }
+  },[car])
+
+  const getStoreLocations_ = async () => {
+    const res = await getStoreLocations();
+    console.log(res);
+    setStoreLocation(res.storesLocations);
+  };
+
+  const handleChange = (e) => {
+    setFormValue({ ...formValue, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    console.log(formValue.carId.connect.id);
+    const res = await createBooking(formValue);
+    console.log(res);
+  };
+
   return (
     <div>
       <div className="flex flex-col w-full mb-5">
         <label className="text-gray-400">PickUp Location</label>
-        <select className="select 
+        <select
+          className="select 
         select-bordered w-full max-w-lg"
-        name="location" 
-        // onChange={handleChange}
-       >
+          name="location"
+          onChange={handleChange}
+        >
           <option disabled selected>
             PickUp Location?
           </option>
@@ -36,8 +67,8 @@ export default function Form() {
           <label className="text-gray-400">Pick Up Date</label>
           <input
             type="date"
-            // min={today}
-            // onChange={handleChange}
+            min={today}
+            onChange={handleChange}
             placeholder="Type here"
             name="pickUpDate"
             className="input input-bordered w-full max-w-lg"
@@ -47,9 +78,9 @@ export default function Form() {
           <label className="text-gray-400">Drop Off Date</label>
           <input
             type="date"
-            // onChange={handleChange}
+            onChange={handleChange}
             placeholder="Type here"
-                name="dropOffDate"
+            name="dropOffDate"
             className="input input-bordered w-full max-w-lg"
           />
         </div>
@@ -59,7 +90,7 @@ export default function Form() {
           <label className="text-gray-400">Pick Up Time</label>
           <input
             type="time"
-            // onChange={handleChange}
+            onChange={handleChange}
             name="pickUpTime"
             placeholder="Type here"
             className="input input-bordered w-full max-w-lg"
@@ -70,7 +101,7 @@ export default function Form() {
           <input
             type="time"
             name="dropOffTime"
-            // onChange={handleChange}
+            onChange={handleChange}
             placeholder="Type here"
             className="input input-bordered w-full max-w-lg"
           />
@@ -82,10 +113,19 @@ export default function Form() {
         <input
           type="text"
           placeholder="Type here"
-        //   onChange={handleChange}
+          onChange={handleChange}
           name="contactNumber"
           className="input input-bordered w-full max-w-lg"
         />
+      </div>
+      <div className="modal-action">
+        <button className="btn">Close</button>
+        <button
+          className="btn bg-blue-500 text-white hover:bg-blue-900"
+          onClick={handleSubmit}
+        >
+          Save
+        </button>
       </div>
     </div>
   );
